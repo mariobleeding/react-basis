@@ -1,10 +1,11 @@
 import { Component } from "react";
 
 class LifeCycle extends Component {
-  // 1st, setting state
+  // 1st, constructor is used for setting state by default
+  state = {};
   constructor(props) {
     super(props);
-    console.log("Contructor", props);
+    console.log("Contructor props:", props);
   }
 
   // 3rd, evaluates if the DOM is updated
@@ -12,8 +13,13 @@ class LifeCycle extends Component {
     console.log("componentDidMount");
   }
 
+  // When the state changes this is triggered
   componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate:");
+    console.log("componentDidUpdate:", prevProps, prevState);
+  }
+
+  componentWillUnmount() {
+    console.log("Unmounting component", this.props, this.state);
   }
 
   // 2nd

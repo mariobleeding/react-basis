@@ -9,21 +9,31 @@ class Button extends Component {
 
 class LabelTextClicks extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
+
+  componentWillUnmount() {
+    console.log("Unmounting component", this.props, this.state);
+  }
+
   render() {
-    if (this.props.clicks == 0) {
-      return <p>clicks</p>
-    } else if (this.props.clicks == 1 || this.props.clicks == -1) {
-      return <p>click</p> 
-    } else {
-      return <p>clicks</p>
-    }
+    return this.props.clicks === 0 ? (
+      <p>clicks</p>
+    ) : this.props.clicks === 1 || this.props.clicks === -1 ? (
+      <p>click</p>
+    ) : (
+      <p>many clicks</p>
+    );
   }
 }
 
 class FromComponent extends Component {
   state = { clicks: 0 };
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("componentDidUpdate:", prevProps, prevState);
+  }
+
   render() {
     console.log(this.state);
     return (
@@ -35,7 +45,12 @@ class FromComponent extends Component {
         >
           Add click
         </button>
-        <span>You have <LabelTextClicks /> </span>
+        <span>
+          You have{" "}
+          {this.state.clicks < 2 ? (
+            <LabelTextClicks clicks={this.state.clicks} />
+          ) : null}
+        </span>
       </div>
     );
   }
